@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Article
 from .forms import ArticleForm
 
@@ -12,6 +12,7 @@ def index(request):
 
     return render(request, 'index.html', context)
 
+
 def create(request):
 
     if request.method == 'POST':
@@ -21,17 +22,18 @@ def create(request):
             artice = form.save()
             return redirect('article:index')
 
-        else:
-            context = {
-                'form':form
-            }
-        return render(request, 'create.html', context)
-
     else:
         form = ArticleForm()
 
-        context = {
-            'form':form
-        }
+    context = {
+        'form':form
+    }
 
-        return render(request, 'create.html', context)
+    return render(request, 'create.html', context)
+
+
+def delete(request, id):
+    article = Article.objects.get(id=id)
+    article.delete()
+
+    return redirect('articles:index')

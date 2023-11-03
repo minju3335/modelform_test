@@ -3,9 +3,12 @@
 {% block body %}
     <h1>index 페이지 입니다</h1>
 
+
     {% for article in articles %}
         <p>{{ article.title }}</p>
         <p>{{ article.content }}</p>
+        <a href="{% url 'articles:delete' id=article.id %}">delete</a>
+        <a href="{% url 'articles:update' id=article.id %}">update</a>
         <hr>
     {% endfor %}
 {% endblock %}
